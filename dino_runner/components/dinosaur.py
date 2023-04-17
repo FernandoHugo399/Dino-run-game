@@ -5,6 +5,7 @@ from pygame.locals import K_UP, K_DOWN, K_SPACE
 from pygame.sprite import Sprite
 from dino_runner.utils.constants import DUCKING, RUNNING, JUMPING, JUMP_VELOCITY, X_POSITION_DINO, Y_POSITION_DINO, Y_POSITION_DUCK, DEFAULT_TYPE
 
+
 RUN_IMG = {DEFAULT_TYPE: RUNNING}
 JUMP_IMG = {DEFAULT_TYPE: JUMPING}
 DUCK_IMG = {DEFAULT_TYPE: DUCKING}

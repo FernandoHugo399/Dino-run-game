@@ -1,8 +1,8 @@
 import pygame
 
 from pygame.sprite import Sprite
-from dino_runner.components import game
 from dino_runner.utils.constants import SCREEN_WIDTH
+
 
 class Obstacle(Sprite):
     def __init__(self, image, type):
@@ -10,11 +10,10 @@ class Obstacle(Sprite):
         self.type = type
         self.rect = self.image[self.type].get_rect()
         self.rect.x = SCREEN_WIDTH
-        self.rect.y = 320
         
     def update(self, game_speed, obstacle):
         self.rect.x -= game_speed
-        if self.rect.x < self.rect.width:
+        if self.rect.x < -self.rect.width:
             obstacle.pop()
     
     def draw(self, screen):

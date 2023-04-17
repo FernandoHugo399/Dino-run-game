@@ -4,6 +4,7 @@ from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, GAME_SPEED, X_POSITION_BACKGROUND, Y_POSITION_BACKGROUND, BIRD, RUNNING
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 
+
 class Game:
     def __init__(self): 
         pygame.init()
@@ -22,7 +23,7 @@ class Game:
 
     def run(self):
         self.playing = True
-        self.obstacle_manager.reset_obstacles()
+        self.obstacle_manager.reset_obstacles() # Reseta os obstáculos quando recomeça o jogo
         while self.playing:
             self.events()
             self.update()
@@ -38,14 +39,14 @@ class Game:
     def update(self):
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
-        self.obstacle_manager.update(self)
+        self.obstacle_manager.update(self) # Atualiza os obstáculos
 
     def draw(self):
         self.clock.tick(FPS)
         self.screen.fill((200, 200, 200))
         self.draw_background()
         self.player.draw(self.screen)
-        self.obstacle_manager.draw(self.screen)
+        self.obstacle_manager.draw(self.screen) # Desenha os obstáculos
             
         pygame.display.flip()
         

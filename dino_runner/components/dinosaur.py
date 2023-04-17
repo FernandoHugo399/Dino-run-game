@@ -1,9 +1,9 @@
 import pygame
 import os
 
-from pygame.locals import K_UP, K_DOWN
+from pygame.locals import K_UP, K_DOWN, K_SPACE
 from pygame.sprite import Sprite
-from dino_runner.utils.constants import DUCKING, RUNNING, JUMPING, JUMP_VELOCITY, X_POSITION_DINO, Y_POSITION_DINO, DEFAULT_TYPE
+from dino_runner.utils.constants import DUCKING, RUNNING, JUMPING, JUMP_VELOCITY, X_POSITION_DINO, Y_POSITION_DINO, Y_POSITION_DUCK, DEFAULT_TYPE
 
 RUN_IMG = {DEFAULT_TYPE: RUNNING}
 JUMP_IMG = {DEFAULT_TYPE: JUMPING}
@@ -32,13 +32,13 @@ class Dinosaur(Sprite):
         if self.dino_down:
             self.down()
         
-        if user_input[K_UP] and not self.dino_jump and not user_input[K_DOWN]:
+        if (user_input[K_UP] and not self.dino_jump and not user_input[K_DOWN]) or (user_input[K_SPACE] and not self.dino_jump and not user_input[K_DOWN]):
             self.dino_run = False
             self.dino_jump = True  
         elif user_input[K_DOWN] and not self.dino_jump:
             self.dino_run = False
             self.dino_down = True
-            if pygame.key.get_pressed()[K_UP]:
+            if pygame.key.get_pressed()[K_UP] or pygame.key.get_pressed()[K_SPACE]:
                 self.dino_down = False
                 self.dino_jump = True  
         elif not self.dino_jump:
@@ -77,5 +77,5 @@ class Dinosaur(Sprite):
         self.image = DUCK_IMG[self.type][self.step_index // 5]
         self.dino_rect = self.image.get_rect()
         self.dino_rect.x = X_POSITION_DINO
-        self.dino_rect.y = Y_POSITION_DINO + 34
+        self.dino_rect.y = Y_POSITION_DUCK
         self.step_index += 1

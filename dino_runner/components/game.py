@@ -60,6 +60,8 @@ class Game:
         self.score += 1
         if self.score % 100 == 0 and self.game_speed < 60:
             self.game_speed += 5
+            if self.score % 100 == 0:
+                self.score += 1
             self.sound_score.set_volume(0.5)
             self.sound_score.play()
             

@@ -3,7 +3,7 @@ pygame.init()
 pygame.mixer.init()
 
 from dino_runner.components.dinosaur import Dinosaur
-from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, GAME_SPEED, X_POSITION_BACKGROUND, Y_POSITION_BACKGROUND
+from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, GAME_SPEED, X_POSITION_BACKGROUND, Y_POSITION_BACKGROUND, SCORE_SOUND
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.utils.text_utils import draw_message_component
 
@@ -23,6 +23,7 @@ class Game:
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
         self.death_count = 0
+        self.sound_score = SCORE_SOUND
     
     def execute(self): 
         self.running = True
@@ -55,10 +56,12 @@ class Game:
         self.obstacle_manager.update(self) 
         self.update_score()
     
-    def update_score(self): # Atualiza o score a cada frame
+    def update_score(self):
         self.score += 1
         if self.score % 100 == 0 and self.game_speed < 60:
             self.game_speed += 5
+            self.sound_score.set_volume(0.5)
+            self.sound_score.play()
             
 
     def draw(self):

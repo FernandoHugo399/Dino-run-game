@@ -12,11 +12,13 @@ DUCK_IMG = {DEFAULT_TYPE: DUCKING}
 
 class Dinosaur(Sprite):
     def __init__(self) -> None:
+        Sprite.__init__(self).__init__()
         self.type = DEFAULT_TYPE
         self.image = RUN_IMG[self.type][0]
-        self.dino_rect = self.image.get_rect()
-        self.dino_rect.x = X_POSITION_DINO 
-        self.dino_rect.y = Y_POSITION_DINO
+        self.rect = self.image.get_rect()
+        self.rect.x = X_POSITION_DINO 
+        self.rect.y = Y_POSITION_DINO
+        self.mask = pygame.mask.from_surface(self.image)
         self.step_index = 0
         self.dino_run = True
         self.dino_down = False
@@ -58,33 +60,35 @@ class Dinosaur(Sprite):
             self.step_index = 0
             
     def draw(self, screen):
-        screen.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
+        screen.blit(self.image, (self.rect.x, self.rect.y))
     
     def run(self):
         self.image = RUN_IMG[self.type][self.step_index // 5]
-        self.dino_rect = self.image.get_rect()
-        self.dino_rect.x = X_POSITION_DINO
-        self.dino_rect.y = Y_POSITION_DINO
+        self.rect = self.image.get_rect()
+        self.rect.x = X_POSITION_DINO
+        self.rect.y = Y_POSITION_DINO
         self.step_index += 1
 
     def jump(self):
         self.image = JUMP_IMG[self.type]
+        self.mask = pygame.mask.from_surface(self.image)
         self.jump_sound_is_played = False
         if self.dino_jump:
-            self.dino_rect.y -= self.jump_vel * 4 #type: ignore
+            self.rect.y -= self.jump_vel * 4 #type: ignore
             if pygame.key.get_pressed()[K_DOWN]:
                 self.jump_vel -= 1.6
             else:
                 self.jump_vel -= 0.8
                 
-        if self.dino_rect.y >= Y_POSITION_DINO:
-            self.dino_rect.y = Y_POSITION_DINO
+        if self.rect.y >= Y_POSITION_DINO:
+            self.rect.y = Y_POSITION_DINO
             self.dino_jump = False
             self.jump_vel = JUMP_VELOCITY
             
     def down(self):
         self.image = DUCK_IMG[self.type][self.step_index // 5]
-        self.dino_rect = self.image.get_rect()
-        self.dino_rect.x = X_POSITION_DINO
-        self.dino_rect.y = Y_POSITION_DUCK
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.rect.x = X_POSITION_DINO
+        self.rect.y = Y_POSITION_DUCK
         self.step_index += 1

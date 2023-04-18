@@ -6,7 +6,8 @@ TITLE = "Dino Runner"
 SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 1500
 FPS = 30
-IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
+IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets","images")
+SOUND_DIR = os.path.join(os.path.dirname(__file__), "..", "assets","sounds")
 GAME_SPEED = 20
 
 X_POSITION_BACKGROUND = 0
@@ -79,3 +80,7 @@ BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
 HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 
 DEFAULT_TYPE = "default"
+
+DEATH_SOUND = os.path.join(SOUND_DIR, 'death_sound.wav')
+JUMP_SOUND = os.path.join(SOUND_DIR, 'jump_sound.wav')
+SCORE_SOUND = os.path.join(SOUND_DIR, 'score_sound.wav')

@@ -1,3 +1,5 @@
+import pygame
+
 from random import randint
 from dino_runner.components.obstacles.cactus import Cactus 
 from dino_runner.components.obstacles.piterodactyl import Piterodactyl 
@@ -17,7 +19,9 @@ class ObstacleManager:
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)
             if game.player.dino_rect.colliderect(obstacle.rect):
-                self.obstacles.remove(obstacle)
+                pygame.time.delay(1000)
+                game.playing = False
+                game.death_count += 1
     
     def reset_obstacles(self):
         self.obstacles = [] 

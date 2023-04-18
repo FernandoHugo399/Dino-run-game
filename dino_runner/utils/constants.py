@@ -81,6 +81,6 @@ HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 
 DEFAULT_TYPE = "default"
 
-DEATH_SOUND = os.path.join(SOUND_DIR, 'death_sound.wav')
-JUMP_SOUND = os.path.join(SOUND_DIR, 'jump_sound.wav')
-SCORE_SOUND = os.path.join(SOUND_DIR, 'score_sound.wav')
+DEATH_SOUND = pygame.mixer.Sound(os.path.join(SOUND_DIR, 'death_sound.wav'))
+JUMP_SOUND = pygame.mixer.Sound(os.path.join(SOUND_DIR, 'jump_sound.wav'))
+SCORE_SOUND = pygame.mixer.Sound(os.path.join(SOUND_DIR, 'score_sound.wav'))

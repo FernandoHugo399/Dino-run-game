@@ -3,7 +3,7 @@ import os
 
 from pygame.locals import K_UP, K_DOWN, K_SPACE
 from pygame.sprite import Sprite
-from dino_runner.utils.constants import DUCKING, RUNNING, JUMPING, JUMP_VELOCITY, X_POSITION_DINO, Y_POSITION_DINO, Y_POSITION_DUCK, DEFAULT_TYPE
+from dino_runner.utils.constants import DUCKING, RUNNING, JUMPING, JUMP_VELOCITY, X_POSITION_DINO, Y_POSITION_DINO, Y_POSITION_DUCK, DEFAULT_TYPE, JUMP_SOUND
 
 
 RUN_IMG = {DEFAULT_TYPE: RUNNING}
@@ -22,6 +22,8 @@ class Dinosaur(Sprite):
         self.dino_down = False
         self.dino_jump = False
         self.jump_vel = JUMP_VELOCITY
+        self.jump_sound = JUMP_SOUND
+        self.jump_sound_is_played = False
         
     def update(self, user_input):        
         if self.dino_run:
@@ -32,10 +34,14 @@ class Dinosaur(Sprite):
             
         if self.dino_down:
             self.down()
-        
+              
         if (user_input[K_UP] and not self.dino_jump and not user_input[K_DOWN]) or (user_input[K_SPACE] and not self.dino_jump and not user_input[K_DOWN]):
             self.dino_run = False
             self.dino_jump = True  
+            if not self.jump_sound_is_played:
+                self.jump_sound.set_volume(1)
+                self.jump_sound.play()
+                self.jump_sound_is_played = True
         elif user_input[K_DOWN] and not self.dino_jump:
             self.dino_run = False
             self.dino_down = True
@@ -46,6 +52,7 @@ class Dinosaur(Sprite):
             self.dino_run = True
             self.dino_down = False
             self.dino_jump = False
+        
         
         if self.step_index >= 10:
             self.step_index = 0
@@ -62,6 +69,7 @@ class Dinosaur(Sprite):
 
     def jump(self):
         self.image = JUMP_IMG[self.type]
+        self.jump_sound_is_played = False
         if self.dino_jump:
             self.dino_rect.y -= self.jump_vel * 4 #type: ignore
             if pygame.key.get_pressed()[K_DOWN]:

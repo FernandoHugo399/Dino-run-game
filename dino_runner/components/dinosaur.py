@@ -79,7 +79,7 @@ class Dinosaur(Sprite):
                 self.jump_vel -= 1.6
             else:
                 self.jump_vel -= 0.8
-                
+
         if self.rect.y >= Y_POSITION_DINO:
             self.rect.y = Y_POSITION_DINO
             self.dino_jump = False

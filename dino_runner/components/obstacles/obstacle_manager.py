@@ -1,4 +1,3 @@
-from re import S
 import pygame
 
 from random import randint
@@ -25,6 +24,9 @@ class ObstacleManager:
             self.obstacles.append(Obstacle_type[randint(0, 1)]) 
             self.obstacles_group.add(self.cactus)
             self.obstacles_group.add(self.piterodactyl)
+        self.verify_collide(game)
+        
+    def verify_collide(self, game):
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)
             collide = pygame.sprite.spritecollide(game.player, self.obstacles_group, True, pygame.sprite.collide_mask) # type: ignore
@@ -37,8 +39,7 @@ class ObstacleManager:
                 game.player.dino_jump = False
                 game.playing = False
                 game.death_count += 1
-                
-        print(len(self.obstacles_group))
+        
     def reset_obstacles(self):
         self.obstacles = [] 
         

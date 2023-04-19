@@ -3,8 +3,7 @@ import pygame
 from random import randint
 from dino_runner.components.obstacles.cactus import Cactus 
 from dino_runner.components.obstacles.piterodactyl import Piterodactyl 
-from dino_runner.utils.constants import DEATH_SOUND, GAME_OVER, DINO_DEAD
-
+from dino_runner.utils.constants import DEATH_SOUND
 
 
 class ObstacleManager:
@@ -32,8 +31,7 @@ class ObstacleManager:
             collide = pygame.sprite.spritecollide(game.player, self.obstacles_group, True, pygame.sprite.collide_mask) # type: ignore
             if len(collide) != 0:
                 if not game.player.has_power_up:
-                    game.player.image = DINO_DEAD
-                    game.draw()
+                    game.draw_game_over()
                     self.death_sound.set_volume(1)
                     self.death_sound.play()
                     pygame.time.delay(1000)

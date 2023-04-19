@@ -3,7 +3,7 @@ pygame.init()
 pygame.mixer.init()
 
 from dino_runner.components.dinosaur import Dinosaur
-from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, GAME_SPEED, X_POSITION_BACKGROUND, Y_POSITION_BACKGROUND, SCORE_SOUND, SCORE_TXT, CLOUD, DEFAULT_TYPE, Y_POSITION_DINO
+from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, GAME_SPEED, X_POSITION_BACKGROUND, Y_POSITION_BACKGROUND, SCORE_SOUND, SCORE_TXT, CLOUD, DEFAULT_TYPE, Y_POSITION_DINO, DINO_DEAD
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.utils.text_utils import draw_message_component
 from dino_runner.components.powerups.power_up_manager import PowerUpManager
@@ -116,6 +116,10 @@ class Game:
             pos_y_center = 50
         )
     
+    def draw_game_over(self):
+        self.player.image = DINO_DEAD
+        self.draw()
+    
     def draw_power_upper_time(self):
         if self.player.has_power_up:
             time_to_show = round((self.player.power_up_time - pygame.time.get_ticks()) / 1000, 2) #type: ignore
@@ -145,7 +149,7 @@ class Game:
             draw_message_component("Press any key to start.", self.screen)
         else:
             draw_message_component("Press any key to play again.", self.screen, pos_y_center = self.half_screen_height - 40)
-            draw_message_component(f"Your score: {self.score}", self.screen, pos_y_center = self.half_screen_height - 80) 
+            draw_message_component(f"Your score: {self.score - 1}", self.screen, pos_y_center = self.half_screen_height - 80) 
             draw_message_component(f"Death count: {self.death_count}", self.screen, pos_y_center=self.half_screen_height )
             self.best_scores()
             

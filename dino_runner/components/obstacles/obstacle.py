@@ -13,7 +13,7 @@ class Obstacle(Sprite):
         self.mask = pygame.mask.from_surface(self.image[self.type])
         self.rect.x = SCREEN_WIDTH
     
-    def restart_position(self): # Reiniciar posição do objeto após a colisão
+    def restart_position(self):
         self.rect.x = SCREEN_WIDTH
         
     def update(self, game_speed, obstacle):

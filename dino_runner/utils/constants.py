@@ -84,6 +84,7 @@ DINO_DEAD = pygame.image.load(os.path.join(IMG_DIR, 'Dino/DinoDead.png'))
 
 DEFAULT_TYPE = "default"
 SHIELD_TYPE = "shield"
+HAMMER_TYPE = "hammer"
 
 DEATH_SOUND = pygame.mixer.Sound(os.path.join(SOUND_DIR, 'death_sound.wav'))
 JUMP_SOUND = pygame.mixer.Sound(os.path.join(SOUND_DIR, 'jump_sound.wav'))

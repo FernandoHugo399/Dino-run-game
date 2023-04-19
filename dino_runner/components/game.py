@@ -172,7 +172,4 @@ class Game:
                 
     def update_list_score(self, score):
         with open(f'{SCORE_TXT}', 'a') as archive:
-            all_values = []
-            all_values.append(score)
-            for value in all_values:
-                archive.write(str(value) + '\n')
+                archive.write(str(score) + '\n')

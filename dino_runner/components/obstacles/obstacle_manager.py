@@ -3,7 +3,7 @@ import pygame
 from random import randint
 from dino_runner.components.obstacles.cactus import Cactus 
 from dino_runner.components.obstacles.piterodactyl import Piterodactyl 
-from dino_runner.utils.constants import DEATH_SOUND, Y_POSITION_DINO
+from dino_runner.utils.constants import DEATH_SOUND
 
 
 
@@ -36,10 +36,9 @@ class ObstacleManager:
                     self.death_sound.play()
                     pygame.time.delay(1000)
                     obstacle.restart_position()
-                    game.player.rect.y = Y_POSITION_DINO
-                    game.player.dino_jump = False
                     game.playing = False
                     game.death_count += 1
+                    game.update_list_score(game.score)
                 else: 
                     self.reset_obstacles()
                     self.cactus = Cactus()

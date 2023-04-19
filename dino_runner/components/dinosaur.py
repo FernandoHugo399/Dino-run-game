@@ -3,12 +3,12 @@ import os
 
 from pygame.locals import K_UP, K_DOWN, K_SPACE
 from pygame.sprite import Sprite
-from dino_runner.utils.constants import DUCKING, RUNNING, JUMPING, JUMP_VELOCITY, X_POSITION_DINO, Y_POSITION_DINO, Y_POSITION_DUCK, DEFAULT_TYPE, JUMP_SOUND
+from dino_runner.utils.constants import DUCKING, RUNNING, JUMPING, JUMP_VELOCITY, X_POSITION_DINO, Y_POSITION_DINO, Y_POSITION_DUCK, DEFAULT_TYPE, JUMP_SOUND, SHIELD_TYPE, DUCKING_SHIELD, JUMPING_SHIELD, RUNNING_SHIELD
 
 
-RUN_IMG = {DEFAULT_TYPE: RUNNING}
-JUMP_IMG = {DEFAULT_TYPE: JUMPING}
-DUCK_IMG = {DEFAULT_TYPE: DUCKING}
+DUCK_IMG = { DEFAULT_TYPE: DUCKING, SHIELD_TYPE: DUCKING_SHIELD}
+JUMP_IMG = { DEFAULT_TYPE: JUMPING, SHIELD_TYPE: JUMPING_SHIELD}
+RUN_IMG = { DEFAULT_TYPE: RUNNING, SHIELD_TYPE: RUNNING_SHIELD}
 
 class Dinosaur(Sprite):
     def __init__(self) -> None:
@@ -26,6 +26,13 @@ class Dinosaur(Sprite):
         self.jump_vel = JUMP_VELOCITY
         self.jump_sound = JUMP_SOUND
         self.jump_sound_is_played = False
+        self.setup_state()
+    
+    def setup_state(self):
+        self.has_power_up = False
+        self.shield = False
+        self.show_text = False
+        self.shield_time_up = 0
         
     def update(self, user_input):        
         if self.dino_run:

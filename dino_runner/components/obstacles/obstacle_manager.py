@@ -31,14 +31,19 @@ class ObstacleManager:
             obstacle.update(game.game_speed, self.obstacles)
             collide = pygame.sprite.spritecollide(game.player, self.obstacles_group, True, pygame.sprite.collide_mask) # type: ignore
             if len(collide) != 0:
-                self.death_sound.set_volume(1)
-                self.death_sound.play()
-                pygame.time.delay(1000)
-                obstacle.restart_position()
-                game.player.rect.y = Y_POSITION_DINO
-                game.player.dino_jump = False
-                game.playing = False
-                game.death_count += 1
+                if not game.player.has_power_up:
+                    self.death_sound.set_volume(1)
+                    self.death_sound.play()
+                    pygame.time.delay(1000)
+                    obstacle.restart_position()
+                    game.player.rect.y = Y_POSITION_DINO
+                    game.player.dino_jump = False
+                    game.playing = False
+                    game.death_count += 1
+                else: 
+                    self.reset_obstacles()
+                    self.cactus = Cactus()
+                    self.piterodactyl = Piterodactyl()
         
     def reset_obstacles(self):
         self.obstacles = [] 

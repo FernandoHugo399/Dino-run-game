@@ -1,9 +1,10 @@
+from token import AMPEREQUAL
 import pygame
 pygame.init()
 pygame.mixer.init()
 
 from dino_runner.components.dinosaur import Dinosaur
-from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, GAME_SPEED, X_POSITION_BACKGROUND, Y_POSITION_BACKGROUND, SCORE_SOUND
+from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, GAME_SPEED, X_POSITION_BACKGROUND, Y_POSITION_BACKGROUND, SCORE_SOUND, SCORE_TXT
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.utils.text_utils import draw_message_component
 
@@ -24,6 +25,8 @@ class Game:
         self.obstacle_manager = ObstacleManager()
         self.death_count = 0
         self.sound_score = SCORE_SOUND
+        self.half_screen_height = SCREEN_HEIGHT // 2
+        self.half_screen_width = SCREEN_WIDTH // 2
     
     def execute(self): 
         self.running = True
@@ -103,15 +106,31 @@ class Game:
 
     def show_menu(self):
         self.screen.fill((220, 220, 220))  
-        half_screen_height = SCREEN_HEIGHT // 2
-        half_screen_width = SCREEN_WIDTH // 2
         if self.death_count == 0:
             draw_message_component("Press any key to start.", self.screen)
         else:
-            pass
-            draw_message_component("Press any key to play again.", self.screen, pos_y_center = half_screen_height - 40)
-            draw_message_component(f"Your score: {self.score}", self.screen, pos_y_center = half_screen_height - 80) 
-            draw_message_component(f"Death count: {self.death_count}", self.screen, pos_y_center=half_screen_height )
+            draw_message_component("Press any key to play again.", self.screen, pos_y_center = self.half_screen_height - 40)
+            draw_message_component(f"Your score: {self.score}", self.screen, pos_y_center = self.half_screen_height - 80) 
+            draw_message_component(f"Death count: {self.death_count}", self.screen, pos_y_center=self.half_screen_height )
+            draw_message_component("Better results:", self.screen, pos_y_center=self.half_screen_height + 80)
+            self.best_scores()
+            
+            
 
         pygame.display.update()
         self.handle_events_on_menu()
+        
+    def best_scores(self):
+        with open(f'{SCORE_TXT}', 'r') as archive:
+            all_values = []
+            for valor in archive:
+                all_values.append(int(valor.replace("\n", '')))
+                all_values.sort(reverse=True)
+                if len(all_values) > 5:
+                    all_values.pop()
+            
+            count = 0
+            while count < len(all_values):
+                draw_message_component(f"{count + 1}° - {all_values[count]}", self.screen, pos_y_center=self.half_screen_height + 80 + ((count+1) * 35))
+                count += 1
+            

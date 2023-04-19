@@ -7,6 +7,7 @@ SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 1500
 FPS = 30
 IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets","images")
+OTHER_DIR = os.path.join(os.path.dirname(__file__), "..", "assets","other")
 SOUND_DIR = os.path.join(os.path.dirname(__file__), "..", "assets","sounds")
 GAME_SPEED = 20
 
@@ -84,3 +85,5 @@ DEFAULT_TYPE = "default"
 DEATH_SOUND = pygame.mixer.Sound(os.path.join(SOUND_DIR, 'death_sound.wav'))
 JUMP_SOUND = pygame.mixer.Sound(os.path.join(SOUND_DIR, 'jump_sound.wav'))
 SCORE_SOUND = pygame.mixer.Sound(os.path.join(SOUND_DIR, 'score_sound.wav'))
+
+SCORE_TXT =  os.path.join(OTHER_DIR, 'score.txt')
